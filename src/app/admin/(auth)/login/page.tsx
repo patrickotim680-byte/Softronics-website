@@ -11,14 +11,30 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+const signOutReasons: Record<string, { title: string; body: string }> = {
+  unauthorized: {
+    title: 'Signed out',
+    body:
+      'That account is signed in to Supabase but is not an authorized administrator. ' +
+      'Add its email to ADMIN_ALLOWED_EMAILS (or the admin_allowlist table) and sign in again.',
+  },
+  tables_missing: {
+    title: 'Database not set up',
+    body:
+      'The dashboard tables do not exist yet. Run supabase/migrations/0001_init.sql, ' +
+      '0002_rls.sql and 0003_admin_allowlist.sql in the Supabase SQL editor, then sign in again.',
+  },
+};
+
 export default async function AdminLoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; reason?: string }>;
 }) {
-  const { next } = await searchParams;
+  const { next, reason } = await searchParams;
   const safeNext = next && isSafeInternalPath(next) ? next : undefined;
   const missing = missingSupabaseEnv();
+  const notice = reason ? signOutReasons[reason] : undefined;
 
   return (
     <main className="flex min-h-screen flex-col bg-canvas">
@@ -37,6 +53,12 @@ export default async function AdminLoginPage({
           <p className="mt-2 text-sm leading-relaxed text-muted">
             Authorized accounts only. Access is granted per email address.
           </p>
+
+          {notice && (
+            <Alert tone="warning" title={notice.title} className="mt-6">
+              <p>{notice.body}</p>
+            </Alert>
+          )}
 
           <div className="mt-8">
             {missing.length > 0 ? (

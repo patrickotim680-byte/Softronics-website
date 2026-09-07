@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { isSupabaseConfigured, publicEnv } from '@/lib/env';
 
 const LOGIN_PATH = '/admin/login';
+const SIGN_OUT_PATH = '/admin/sign-out';
 
 /**
  * Refreshes the Supabase session cookie on every request and gates /admin.
@@ -15,6 +16,12 @@ export async function updateSessionAndGuard(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
   const isLoginRoute = pathname === LOGIN_PATH;
+
+  // The sign-out handler must be reachable with or without a session so that a
+  // signed-in non-admin can always clear their cookie.
+  if (pathname === SIGN_OUT_PATH) {
+    return NextResponse.next({ request });
+  }
 
   if (!isSupabaseConfigured()) {
     // Without a database there is nothing to protect; /admin/login renders a
