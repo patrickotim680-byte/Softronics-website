@@ -16,7 +16,11 @@ export async function listPublishedProducts(): Promise<Product[]> {
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false });
 
-  if (error) throw new Error(`Failed to load products: ${error.message}`);
+  if (error) {
+    // Public read: never fail the build or the page. Render the empty state.
+    console.error('[products] public read failed:', error.message);
+    return [];
+  }
   return (data ?? []) as Product[];
 }
 
@@ -37,7 +41,10 @@ export async function getPublishedProductBySlug(slug: string): Promise<Product |
     .eq('is_published', true)
     .maybeSingle();
 
-  if (error) throw new Error(`Failed to load product: ${error.message}`);
+  if (error) {
+    console.error('[products] public read failed:', error.message);
+    return null;
+  }
   return (data as Product) ?? null;
 }
 
