@@ -42,7 +42,11 @@ export async function listPublishedPosts(limit?: number): Promise<PostWithRelati
   if (limit) query = query.limit(limit);
 
   const { data, error } = await query;
-  if (error) throw new Error(`Failed to load posts: ${error.message}`);
+  if (error) {
+    // Public read: never fail the build or the page. Render the empty state.
+    console.error('[posts] public read failed:', error.message);
+    return [];
+  }
   return ((data ?? []) as unknown as RawPost[]).map(shape);
 }
 
@@ -59,7 +63,10 @@ export async function getPublishedPostBySlug(slug: string): Promise<PostWithRela
     .lte('published_at', new Date().toISOString())
     .maybeSingle();
 
-  if (error) throw new Error(`Failed to load article: ${error.message}`);
+  if (error) {
+    console.error('[posts] public read failed:', error.message);
+    return null;
+  }
   return data ? shape(data as unknown as RawPost) : null;
 }
 

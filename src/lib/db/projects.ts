@@ -14,7 +14,11 @@ export async function listPublishedProjects(): Promise<Project[]> {
     .order('sort_order', { ascending: true })
     .order('year', { ascending: false });
 
-  if (error) throw new Error(`Failed to load projects: ${error.message}`);
+  if (error) {
+    // Public read: never fail the build or the page. Render the empty state.
+    console.error('[projects] public read failed:', error.message);
+    return [];
+  }
   return (data ?? []) as Project[];
 }
 
