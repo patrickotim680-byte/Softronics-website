@@ -1,119 +1,97 @@
 import 'server-only';
 
 import { getPublicSupabase, getServerSupabase } from '@/lib/supabase/server';
-import type { Post, PostStatus, PostWithRelations, Tag } from '@/types/database';
+import type { Product } from '@/types/database';
 
-const POST_SELECT = `
-  id, title, slug, excerpt, content, featured_image_url, featured_media_id,
-  author_id, author_name, category_id, status, published_at, seo_title,
-  seo_description, reading_minutes, created_at, updated_at,
-  category:categories ( id, name, slug ),
-  post_tags ( tags ( id, name, slug ) )
-`;
-
-type RawPost = Post & {
-  category: { id: string; name: string; slug: string } | null;
-  post_tags: { tags: Pick<Tag, 'id' | 'name' | 'slug'> | null }[] | null;
-};
-
-function shape(row: RawPost): PostWithRelations {
-  const { post_tags, ...rest } = row;
-  return {
-    ...rest,
-    tags: (post_tags ?? [])
-      .map((entry) => entry.tags)
-      .filter((tag): tag is Pick<Tag, 'id' | 'name' | 'slug'> => Boolean(tag)),
-  };
-}
-
-/** Published articles for the public site. Drafts are excluded by RLS as well. */
-export async function listPublishedPosts(limit?: number): Promise<PostWithRelations[]> {
+/** Published products for the public site, featured first. */
+export async function listPublishedProducts(): Promise<Product[]> {
   const supabase = getPublicSupabase();
   if (!supabase) return [];
 
-  let query = supabase
-    .from('posts')
-    .select(POST_SELECT)
-    .eq('status', 'published')
-    .not('published_at', 'is', null)
-    .lte('published_at', new Date().toISOString())
-    .order('published_at', { ascending: false });
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('is_published', true)
+    .order('is_featured', { ascending: false })
+    .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: false });
 
-  if (limit) query = query.limit(limit);
-
-  const { data, error } = await query;
-  if (error) throw new Error(`Failed to load posts: ${error.message}`);
-  return ((data ?? []) as unknown as RawPost[]).map(shape);
+  if (error) {
+    // Public read: never fail the build or the page. Render the empty state.
+    console.error('[products] public read failed:', error.message);
+    return [];
+  }
+  return (data ?? []) as Product[];
 }
 
-export async function getPublishedPostBySlug(slug: string): Promise<PostWithRelations | null> {
+export async function listFeaturedProducts(limit = 4): Promise<Product[]> {
+  const products = await listPublishedProducts();
+  const featured = products.filter((product) => product.is_featured);
+  return (featured.length > 0 ? featured : products).slice(0, limit);
+}
+
+export async function getPublishedProductBySlug(slug: string): Promise<Product | null> {
   const supabase = getPublicSupabase();
   if (!supabase) return null;
 
   const { data, error } = await supabase
-    .from('posts')
-    .select(POST_SELECT)
+    .from('products')
+    .select('*')
     .eq('slug', slug)
-    .eq('status', 'published')
-    .not('published_at', 'is', null)
-    .lte('published_at', new Date().toISOString())
+    .eq('is_published', true)
     .maybeSingle();
 
-  if (error) throw new Error(`Failed to load article: ${error.message}`);
-  return data ? shape(data as unknown as RawPost) : null;
+  if (error) {
+    console.error('[products] public read failed:', error.message);
+    return null;
+  }
+  return (data as Product) ?? null;
 }
 
-/** Every article, any status. Only reachable by admins (RLS + requireAdmin). */
-export async function listAllPosts(status?: PostStatus): Promise<PostWithRelations[]> {
+export async function listAllProducts(): Promise<Product[]> {
   const supabase = await getServerSupabase();
   if (!supabase) return [];
 
-  // Filters must be applied before .order(): the transform builder has no .eq().
-  const base = supabase.from('posts').select(POST_SELECT);
-  const filtered = status ? base.eq('status', status) : base;
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('sort_order', { ascending: true })
+    .order('updated_at', { ascending: false });
 
-  const { data, error } = await filtered.order('updated_at', { ascending: false });
-  if (error) throw new Error(`Failed to load posts: ${error.message}`);
-  return ((data ?? []) as unknown as RawPost[]).map(shape);
+  if (error) throw new Error(`Failed to load products: ${error.message}`);
+  return (data ?? []) as Product[];
 }
 
-export async function getPostById(id: string): Promise<PostWithRelations | null> {
+export async function getProductById(id: string): Promise<Product | null> {
   const supabase = await getServerSupabase();
   if (!supabase) return null;
 
-  const { data, error } = await supabase.from('posts').select(POST_SELECT).eq('id', id).maybeSingle();
-  if (error) throw new Error(`Failed to load article: ${error.message}`);
-  return data ? shape(data as unknown as RawPost) : null;
+  const { data, error } = await supabase.from('products').select('*').eq('id', id).maybeSingle();
+  if (error) throw new Error(`Failed to load product: ${error.message}`);
+  return (data as Product) ?? null;
 }
 
-export async function getPostSlugs(): Promise<{ slug: string; updated_at: string }[]> {
+export async function getProductSlugs(): Promise<{ slug: string; updated_at: string }[]> {
   const supabase = getPublicSupabase();
   if (!supabase) return [];
 
   const { data, error } = await supabase
-    .from('posts')
+    .from('products')
     .select('slug, updated_at')
-    .eq('status', 'published')
-    .not('published_at', 'is', null)
-    .lte('published_at', new Date().toISOString());
+    .eq('is_published', true);
 
   if (error) return [];
   return (data ?? []) as { slug: string; updated_at: string }[];
 }
 
-export async function countPosts(): Promise<{ total: number; published: number; drafts: number }> {
+export async function countProducts(): Promise<{ total: number; published: number }> {
   const supabase = await getServerSupabase();
-  if (!supabase) return { total: 0, published: 0, drafts: 0 };
+  if (!supabase) return { total: 0, published: 0 };
 
-  const [total, published, drafts] = await Promise.all([
-    supabase.from('posts').select('id', { count: 'exact', head: true }),
-    supabase.from('posts').select('id', { count: 'exact', head: true }).eq('status', 'published'),
-    supabase.from('posts').select('id', { count: 'exact', head: true }).eq('status', 'draft'),
+  const [total, published] = await Promise.all([
+    supabase.from('products').select('id', { count: 'exact', head: true }),
+    supabase.from('products').select('id', { count: 'exact', head: true }).eq('is_published', true),
   ]);
 
-  return {
-    total: total.count ?? 0,
-    published: published.count ?? 0,
-    drafts: drafts.count ?? 0,
-  };
+  return { total: total.count ?? 0, published: published.count ?? 0 };
 }
