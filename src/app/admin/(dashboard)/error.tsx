@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/ui/alert';
 
@@ -30,12 +31,12 @@ export default function AdminError({
       {error.digest && <p className="font-mono text-xs text-faint">Reference: {error.digest}</p>}
       <div className="flex gap-3">
         <Button onClick={reset}>Try again</Button>
-        <a
+        <Link
           href="/admin"
           className="inline-flex h-11 items-center rounded-md border border-line px-5 text-[0.9375rem] text-ink hover:bg-raised"
         >
           Back to dashboard
-        </a>
+        </Link>
       </div>
     </div>
   );
