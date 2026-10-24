@@ -2,10 +2,20 @@ import { Badge } from '@/components/ui/badge';
 import { POST_STATUS, PRODUCT_STATUS, PROJECT_STATUS, MESSAGE_STATUS } from '@/lib/constants';
 import type { MessageStatus, PostStatus, ProductStatus, ProjectStatus } from '@/types/database';
 
-export function ProductStatusBadge({ status }: { status: ProductStatus }) {
+export function ProductStatusBadge({
+  status,
+  className,
+}: {
+  status: ProductStatus;
+  className?: string;
+}) {
   const meta = PRODUCT_STATUS[status];
   return (
-    <Badge tone={meta.tone} dot={status === 'available' || status === 'in_development'}>
+    <Badge
+      tone={meta.tone}
+      className={className}
+      dot={status === 'available' || status === 'in_development'}
+    >
       {meta.label}
     </Badge>
   );

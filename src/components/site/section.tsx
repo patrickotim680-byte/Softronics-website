@@ -10,9 +10,9 @@ interface SectionProps {
 }
 
 const spacing = {
-  sm: 'py-12 md:py-16',
-  md: 'py-16 md:py-24',
-  lg: 'py-20 md:py-32',
+  sm: 'py-14 md:py-20',
+  md: 'py-20 md:py-28',
+  lg: 'py-24 md:py-36',
 };
 
 export function Section({ children, className, id, space = 'md' }: SectionProps) {
@@ -29,6 +29,7 @@ interface SectionHeadingProps {
   lead?: string;
   className?: string;
   as?: 'h1' | 'h2';
+  align?: 'left' | 'center';
 }
 
 export function SectionHeading({
@@ -37,16 +38,27 @@ export function SectionHeading({
   lead,
   className,
   as = 'h2',
+  align = 'left',
 }: SectionHeadingProps) {
   const Heading = as;
+  const centered = align === 'center';
 
   return (
-    <div className={cn('max-w-2xl', className)}>
-      {eyebrow && <p className="eyebrow mb-4">{eyebrow}</p>}
-      <Heading className="text-display-sm font-semibold text-ink md:text-[2.75rem] md:leading-[1.05] md:tracking-[-0.025em]">
+    <div className={cn('max-w-3xl', centered && 'mx-auto text-center', className)}>
+      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+      <Heading className="text-[2.25rem] font-semibold leading-[1.06] tracking-[-0.03em] text-ink md:text-[3.5rem]">
         {title}
       </Heading>
-      {lead && <p className="mt-5 text-lg leading-relaxed text-muted">{lead}</p>}
+      {lead && (
+        <p
+          className={cn(
+            'mt-5 text-lg leading-relaxed text-muted md:text-xl md:leading-[1.5]',
+            centered && 'mx-auto max-w-2xl',
+          )}
+        >
+          {lead}
+        </p>
+      )}
     </div>
   );
 }
