@@ -64,7 +64,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
 export const PRODUCT_STATUS: Record<ProductStatus, { label: string; tone: Tone }> = {
   concept: { label: 'Concept', tone: 'neutral' },
   research: { label: 'Research', tone: 'violet' },
-  in_development: { label: 'In development', tone: 'amber' },
+  in_development: { label: 'In the works', tone: 'amber' },
   coming_soon: { label: 'Coming soon', tone: 'blue' },
   available: { label: 'Available', tone: 'green' },
   archived: { label: 'Archived', tone: 'neutral' },

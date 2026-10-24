@@ -5,8 +5,8 @@ import { ButtonLink } from '@/components/ui/button';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Section, SectionHeading } from '@/components/site/section';
 import { CtaBand } from '@/components/site/cta-band';
-import { NetworkField } from '@/components/site/network-field';
 import { ProductLine } from '@/components/site/product-row';
+import { Reveal } from '@/components/site/reveal';
 import { SetupNotice } from '@/components/site/setup-notice';
 import { CAPABILITIES, PRINCIPLES, SITE } from '@/lib/constants';
 import { getSettings } from '@/lib/db/settings';
@@ -37,103 +37,120 @@ export default async function HomePage() {
   return (
     <>
       {/* ---------------------------------------------------------------- Hero */}
-      <section className="relative overflow-hidden border-b border-line">
+      <section className="relative overflow-hidden">
         <div
-          className="grid-field absolute inset-0 opacity-[0.55] [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]"
           aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[40rem] bg-[radial-gradient(60%_60%_at_50%_0%,oklch(var(--brand)/0.1),transparent_72%)]"
         />
-        <div className="shell relative grid gap-12 pb-16 pt-14 md:grid-cols-[1.15fr_0.85fr] md:items-center md:pb-24 md:pt-20">
-          <div className="animate-fade-up">
-            <p className="eyebrow">Softronics</p>
-            <h1 className="mt-5 max-w-[18ch] text-[2.5rem] font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-[3.25rem] lg:text-display-lg">
-              {hero.heading}
-            </h1>
-            <p className="mt-6 max-w-prose text-lg leading-relaxed text-muted md:text-xl md:leading-[1.6]">
-              {hero.description}
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <ButtonLink href={hero.primary_cta_href} size="lg">
-                {hero.primary_cta_label}
-              </ButtonLink>
-              <ButtonLink href={hero.secondary_cta_href} variant="secondary" size="lg">
-                {hero.secondary_cta_label}
-              </ButtonLink>
-            </div>
+        <div className="shell relative flex flex-col items-center pb-20 pt-14 text-center md:pb-32 md:pt-24">
+          <p className="eyebrow animate-fade-up">Softronics</p>
+          <h1
+            className="animate-fade-up mt-4 max-w-[16ch] text-[2.875rem] font-semibold leading-[1.02] tracking-[-0.035em] text-ink sm:text-[4.25rem] lg:text-display-lg"
+            style={{ animationDelay: '100ms' }}
+          >
+            {hero.heading}
+          </h1>
+          <p
+            className="animate-fade-up mt-6 max-w-2xl text-lg leading-[1.5] text-muted md:text-[1.375rem]"
+            style={{ animationDelay: '220ms' }}
+          >
+            {hero.description}
+          </p>
+          <div
+            className="animate-fade-up mt-9 flex flex-col items-center gap-3 sm:flex-row"
+            style={{ animationDelay: '340ms' }}
+          >
+            <ButtonLink href={hero.primary_cta_href} size="lg">
+              {hero.primary_cta_label}
+            </ButtonLink>
+            <ButtonLink href={hero.secondary_cta_href} variant="secondary" size="lg">
+              {hero.secondary_cta_label}
+            </ButtonLink>
           </div>
 
-          <div className="relative hidden justify-self-end md:block">
-            <NetworkField className="absolute -left-16 -top-10 h-[22rem] w-[21rem] opacity-70" />
-            <Image
-              src="/brand/softronics-mark.png"
-              alt="Softronics"
-              width={300}
-              height={300}
-              priority
-              className="relative h-[17rem] w-[17rem] lg:h-[19rem] lg:w-[19rem]"
+          <div
+            className="animate-scale-in relative mt-16 md:mt-24"
+            style={{ animationDelay: '480ms' }}
+          >
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 scale-125 rounded-full bg-brand/20 blur-3xl"
             />
+            <div className="animate-float">
+              <Image
+                src="/brand/softronics-mark.png"
+                alt="Softronics"
+                width={300}
+                height={300}
+                priority
+                className="relative h-48 w-48 md:h-72 md:w-72"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ------------------------------------------------------------ What we do */}
-      <Section id="what-we-do" space="md">
-        <div className="grid gap-10 lg:grid-cols-[24rem_minmax(0,1fr)] lg:gap-16">
-          <div>
-            <p className="eyebrow mb-4">What we do</p>
-            <h2 className="text-display-sm font-semibold tracking-[-0.025em] text-ink">
-              Four ways we work with organizations.
-            </h2>
-            <p className="mt-5 max-w-prose leading-relaxed text-muted">
-              Every engagement starts with the problem, in the words of the people who have it.
-            </p>
-            <Link
-              href="/solutions"
-              className="mt-6 inline-flex items-center gap-2 text-[0.9375rem] font-medium text-brand-strong hover:text-brand"
-            >
-              All solutions <span aria-hidden="true">→</span>
-            </Link>
-          </div>
+      <Section id="what-we-do" space="lg" className="bg-raised">
+        <Reveal>
+          <SectionHeading
+            align="center"
+            eyebrow="What we do"
+            title="Four ways we work with organizations."
+            lead="Every engagement starts with the problem, in the words of the people who have it."
+          />
+        </Reveal>
 
-          <ul className="grid grid-cols-1 border-t border-line sm:grid-cols-2">
-            {CAPABILITIES.map((capability) => (
-              <li
-                key={capability.index}
-                className="group border-b border-line sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
-              >
-                <Link href={capability.href} className="block py-7">
-                  <span className="font-mono text-[0.6875rem] tracking-[0.12em] text-brand">
-                    {capability.index}
-                  </span>
-                  <h3 className="mt-3 text-lg font-semibold tracking-[-0.015em] text-ink transition-colors duration-150 group-hover:text-brand-strong">
+        <ul className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-20">
+          {CAPABILITIES.map((capability, index) => (
+            <li key={capability.index}>
+              <Reveal delay={(index % 2) * 120} className="h-full">
+                <Link
+                  href={capability.href}
+                  className="card card-lift group flex h-full min-h-[15rem] flex-col p-8 md:p-10"
+                >
+                  <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink md:text-[1.75rem]">
                     {capability.title}
                   </h3>
-                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
+                  <p className="mt-3 max-w-md text-[1.0625rem] leading-relaxed text-muted">
                     {capability.summary}
                   </p>
+                  <span className="mt-auto pt-8">
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-raised text-ink transition-[background-color,color,transform] duration-500 ease-out group-hover:translate-x-1 group-hover:bg-brand group-hover:text-white"
+                    >
+                      →
+                    </span>
+                  </span>
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+
+        <Reveal className="mt-10 text-center">
+          <Link
+            href="/solutions"
+            className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
+          >
+            See all solutions <span aria-hidden="true">→</span>
+          </Link>
+        </Reveal>
       </Section>
 
-      {/* ------------------------------------------------- What we're building */}
-      <Section id="building" className="border-y border-line bg-surface" space="md">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      {/* ------------------------------------------------- What we're making */}
+      <Section id="building" space="lg">
+        <Reveal>
           <SectionHeading
-            eyebrow="What we're building"
-            title="Products in progress."
-            lead="Statuses are current and honest. Nothing here is presented as finished before it is."
+            align="center"
+            eyebrow="Products"
+            title="What we're making."
+            lead="Software built for African organizations and the people who rely on it."
           />
-          <Link
-            href="/products"
-            className="shrink-0 text-[0.9375rem] font-medium text-brand-strong hover:text-brand"
-          >
-            All products <span aria-hidden="true">→</span>
-          </Link>
-        </div>
+        </Reveal>
 
-        <div className="mt-10">
+        <div className="mt-14 md:mt-20">
           {missing.length > 0 && (
             <div className="mb-6">
               <SetupNotice missing={missing} context="This section" />
@@ -141,9 +158,13 @@ export default async function HomePage() {
           )}
 
           {products.length > 0 ? (
-            <ul className="border-b border-line">
-              {products.map((product) => (
-                <ProductLine key={product.id} product={product} />
+            <ul className="grid gap-4 md:grid-cols-2">
+              {products.map((product, index) => (
+                <li key={product.id}>
+                  <Reveal delay={(index % 2) * 120} className="h-full">
+                    <ProductLine product={product} />
+                  </Reveal>
+                </li>
               ))}
             </ul>
           ) : (
@@ -158,62 +179,78 @@ export default async function HomePage() {
             />
           )}
         </div>
+
+        <Reveal className="mt-10 text-center">
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
+          >
+            See all products <span aria-hidden="true">→</span>
+          </Link>
+        </Reveal>
       </Section>
 
       {/* --------------------------------------------------------------- Why us */}
-      <Section id="why" space="md">
-        <SectionHeading
-          eyebrow="Why Softronics"
-          title="How we decide what to build, and how to build it."
-        />
-        <dl className="mt-12 grid gap-x-14 gap-y-9 sm:grid-cols-2">
+      <Section id="why" space="lg" className="bg-raised">
+        <Reveal>
+          <SectionHeading
+            align="center"
+            eyebrow="Why Softronics"
+            title="How we decide what to build, and how to build it."
+          />
+        </Reveal>
+        <dl className="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-3">
           {PRINCIPLES.map((principle, index) => (
-            <div key={principle.title}>
-              <dt className="flex items-baseline gap-3">
-                <span className="font-mono text-[0.6875rem] text-faint">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[1.0625rem] font-semibold tracking-[-0.01em] text-ink">
-                  {principle.title}
-                </span>
+            <Reveal key={principle.title} delay={(index % 3) * 100}>
+              <dt className="text-[1.25rem] font-semibold tracking-[-0.02em] text-ink">
+                {principle.title}
               </dt>
-              <dd className="mt-2 pl-8 text-[0.9375rem] leading-relaxed text-muted">
+              <dd className="mt-2 text-[1.0625rem] leading-relaxed text-muted">
                 {principle.body}
               </dd>
-            </div>
+            </Reveal>
           ))}
         </dl>
       </Section>
 
       {/* -------------------------------------------------------------- Insights */}
       {posts.length > 0 && (
-        <Section space="sm" className="border-t border-line">
-          <div className="flex items-end justify-between gap-6">
-            <h2 className="text-2xl font-semibold tracking-[-0.02em] text-ink">Recent writing</h2>
+        <Section space="md">
+          <Reveal className="flex items-end justify-between gap-6">
+            <h2 className="text-[1.75rem] font-semibold tracking-[-0.025em] text-ink md:text-[2.25rem]">
+              Recent writing
+            </h2>
             <Link
               href="/insights"
-              className="shrink-0 text-[0.9375rem] font-medium text-brand-strong hover:text-brand"
+              className="shrink-0 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
             >
               All insights <span aria-hidden="true">→</span>
             </Link>
-          </div>
-          <ul className="mt-8 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
-            {posts.map((post) => (
-              <li key={post.id} className="bg-surface">
-                <Link href={`/insights/${post.slug}`} className="group block h-full p-6">
-                  <time
-                    dateTime={post.published_at ?? undefined}
-                    className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-faint"
+          </Reveal>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+            {posts.map((post, index) => (
+              <li key={post.id}>
+                <Reveal delay={index * 120} className="h-full">
+                  <Link
+                    href={`/insights/${post.slug}`}
+                    className="card card-soft card-lift group flex h-full flex-col p-8"
                   >
-                    {formatDate(post.published_at)}
-                  </time>
-                  <h3 className="mt-3 text-lg font-semibold leading-snug tracking-[-0.015em] text-ink transition-colors group-hover:text-brand-strong">
-                    {post.title}
-                  </h3>
-                  {post.excerpt && (
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{post.excerpt}</p>
-                  )}
-                </Link>
+                    <time
+                      dateTime={post.published_at ?? undefined}
+                      className="text-sm text-faint"
+                    >
+                      {formatDate(post.published_at)}
+                    </time>
+                    <h3 className="mt-3 text-[1.375rem] font-semibold leading-snug tracking-[-0.02em] text-ink">
+                      {post.title}
+                    </h3>
+                    {post.excerpt && (
+                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
+                        {post.excerpt}
+                      </p>
+                    )}
+                  </Link>
+                </Reveal>
               </li>
             ))}
           </ul>

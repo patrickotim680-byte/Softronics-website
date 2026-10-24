@@ -37,14 +37,23 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        // SF Pro on Apple devices, Inter everywhere else.
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"SF Pro Display"',
+          '"SF Pro Text"',
+          'var(--font-sans)',
+          'system-ui',
+          'sans-serif',
+        ],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       fontSize: {
         eyebrow: ['0.6875rem', { lineHeight: '1rem', letterSpacing: '0.14em' }],
-        'display-sm': ['2.25rem', { lineHeight: '1.08', letterSpacing: '-0.022em' }],
-        'display-md': ['3rem', { lineHeight: '1.04', letterSpacing: '-0.026em' }],
-        'display-lg': ['4rem', { lineHeight: '1.0', letterSpacing: '-0.03em' }],
+        'display-sm': ['2.25rem', { lineHeight: '1.08', letterSpacing: '-0.028em' }],
+        'display-md': ['3.25rem', { lineHeight: '1.04', letterSpacing: '-0.032em' }],
+        'display-lg': ['5rem', { lineHeight: '1.0', letterSpacing: '-0.038em' }],
       },
       maxWidth: {
         prose: '68ch',
@@ -55,8 +64,16 @@ const config: Config = {
       },
       keyframes: {
         'fade-up': {
-          from: { opacity: '0', transform: 'translate3d(0, 8px, 0)' },
+          from: { opacity: '0', transform: 'translate3d(0, 24px, 0)' },
           to: { opacity: '1', transform: 'translate3d(0, 0, 0)' },
+        },
+        'scale-in': {
+          from: { opacity: '0', transform: 'scale(0.9)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translate3d(0, 0, 0)' },
+          '50%': { transform: 'translate3d(0, -10px, 0)' },
         },
         'fade-in': {
           from: { opacity: '0' },
@@ -64,7 +81,9 @@ const config: Config = {
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'fade-up': 'fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'scale-in': 'scale-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both',
+        float: 'float 7s ease-in-out infinite',
         'fade-in': 'fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
     },

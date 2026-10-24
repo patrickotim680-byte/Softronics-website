@@ -89,32 +89,29 @@ export function ProductRow({ product }: { product: Product }) {
   );
 }
 
-/** Compact variant used in the homepage "What we're building" section. */
+/** Card used in the homepage "What we're making" grid. Wrap it in an <li>. */
 export function ProductLine({ product }: { product: Product }) {
   return (
-    <li className="group border-t border-line">
-      <Link
-        href={`/products/${product.slug}`}
-        className="flex flex-col gap-3 py-6 transition-colors duration-200 sm:flex-row sm:items-baseline sm:gap-8"
-      >
-        <span className="min-w-0 sm:w-[16rem] sm:shrink-0">
-          <span className="block text-lg font-semibold tracking-[-0.015em] text-ink transition-colors duration-150 group-hover:text-brand-strong">
-            {product.name}
-          </span>
-          <span className="mt-2 block">
-            <ProductStatusBadge status={product.status} />
-          </span>
-        </span>
-        <span className="min-w-0 flex-1 text-[0.9375rem] leading-relaxed text-muted">
-          {product.short_description}
-        </span>
+    <Link
+      href={`/products/${product.slug}`}
+      className="card card-soft card-lift group flex h-full flex-col p-8 md:p-10"
+    >
+      <ProductStatusBadge status={product.status} className="self-start" />
+      <span className="mt-6 block text-[1.75rem] font-semibold leading-tight tracking-[-0.025em] text-ink md:text-[2rem]">
+        {product.name}
+      </span>
+      <span className="mt-3 block text-[1.0625rem] leading-relaxed text-muted">
+        {product.short_description}
+      </span>
+      <span className="mt-auto inline-flex items-center gap-1.5 pt-8 text-[0.9375rem] font-medium text-brand-strong">
+        Learn more
         <span
           aria-hidden="true"
-          className="hidden shrink-0 text-faint transition-transform duration-200 ease-out group-hover:translate-x-1 group-hover:text-brand sm:block"
+          className="transition-transform duration-500 ease-out group-hover:translate-x-1"
         >
           →
         </span>
-      </Link>
-    </li>
+      </span>
+    </Link>
   );
 }
