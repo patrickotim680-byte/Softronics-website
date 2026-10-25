@@ -3,89 +3,83 @@ import Link from 'next/link';
 import type { Product } from '@/types/database';
 import { ProductStatusBadge } from './status-badge';
 
-/** Full product card used on the Products page. Wrap it in an <li>. */
-export function ProductRow({ product }: { product: Product }) {
-  const href = `/products/${product.slug}`;
-
+/**
+ * The picture at the top of a product card.
+ * Order of preference: the cover image, then the logo on a soft brand glow,
+ * then the first letter of the name, so a card never looks empty.
+ */
+function ProductVisual({ product }: { product: Product }) {
   return (
-    <Link href={href} className="card card-lift group flex h-full flex-col p-8 md:p-10">
-      <div className="flex items-start gap-4">
-        {product.logo_url ? (
-          <Image
-            src={product.logo_url}
-            alt={`${product.name} logo`}
-            width={48}
-            height={48}
-            className="h-12 w-12 shrink-0 rounded-2xl bg-raised object-contain"
-            unoptimized
-          />
-        ) : null}
-        <div className="flex flex-wrap items-center gap-2 pt-1">
-          <ProductStatusBadge status={product.status} />
-          {product.category && <span className="text-sm text-faint">{product.category}</span>}
+    <div className="relative aspect-[4/3] overflow-hidden bg-ink/[0.04]">
+      {product.image_url ? (
+        <Image
+          src={product.image_url}
+          alt={`${product.name}`}
+          fill
+          sizes="(max-width: 768px) 100vw, 600px"
+          className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+          unoptimized
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(70%_70%_at_50%_40%,oklch(var(--brand)/0.14),transparent_75%)]">
+          {product.logo_url ? (
+            <Image
+              src={product.logo_url}
+              alt={`${product.name} logo`}
+              width={112}
+              height={112}
+              className="h-24 w-24 object-contain transition-transform duration-[1200ms] ease-out group-hover:scale-110 md:h-28 md:w-28"
+              unoptimized
+            />
+          ) : (
+            <span
+              aria-hidden="true"
+              className="text-[5rem] font-semibold tracking-[-0.04em] text-brand/40"
+            >
+              {product.name.charAt(0)}
+            </span>
+          )}
         </div>
-      </div>
-
-      <h3 className="mt-6 text-[1.75rem] font-semibold leading-tight tracking-[-0.025em] text-ink md:text-[2rem]">
-        {product.name}
-      </h3>
-
-      {product.short_description && (
-        <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
-          {product.short_description}
-        </p>
       )}
-
-      {product.features.length > 0 && (
-        <ul className="mt-5 space-y-1.5 text-[0.9375rem] text-ink/80">
-          {product.features.slice(0, 4).map((feature) => (
-            <li key={feature} className="flex gap-2.5">
-              <span
-                aria-hidden="true"
-                className="mt-[0.55rem] h-1.5 w-1.5 shrink-0 rounded-full bg-brand/70"
-              />
-              {feature}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <span className="mt-auto inline-flex items-center gap-1.5 pt-8 text-[0.9375rem] font-medium text-brand-strong">
-        Learn more
-        <span
-          aria-hidden="true"
-          className="transition-transform duration-500 ease-out group-hover:translate-x-1"
-        >
-          →
-        </span>
-      </span>
-    </Link>
+    </div>
   );
 }
 
-/** Card used in the homepage "What we're making" grid. Wrap it in an <li>. */
-export function ProductLine({ product }: { product: Product }) {
+/**
+ * Product card: picture first, then name, status and one line.
+ * Used on the homepage and the Products page. Wrap it in an <li>.
+ */
+export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="card card-soft card-lift group flex h-full flex-col p-8 md:p-10"
+      className="card card-soft card-lift group flex h-full flex-col overflow-hidden"
     >
-      <ProductStatusBadge status={product.status} className="self-start" />
-      <span className="mt-6 block text-[1.75rem] font-semibold leading-tight tracking-[-0.025em] text-ink md:text-[2rem]">
-        {product.name}
-      </span>
-      <span className="mt-3 block text-[1.0625rem] leading-relaxed text-muted">
-        {product.short_description}
-      </span>
-      <span className="mt-auto inline-flex items-center gap-1.5 pt-8 text-[0.9375rem] font-medium text-brand-strong">
-        Learn more
-        <span
-          aria-hidden="true"
-          className="transition-transform duration-500 ease-out group-hover:translate-x-1"
-        >
-          →
+      <ProductVisual product={product} />
+      <div className="flex flex-1 flex-col p-7 md:p-8">
+        <ProductStatusBadge status={product.status} className="self-start" />
+        <h3 className="mt-4 text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink md:text-[1.75rem]">
+          {product.name}
+        </h3>
+        {product.short_description && (
+          <p className="mt-2 line-clamp-2 text-[1.0625rem] leading-relaxed text-muted">
+            {product.short_description}
+          </p>
+        )}
+        <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-[0.9375rem] font-medium text-brand-strong">
+          Learn more
+          <span
+            aria-hidden="true"
+            className="transition-transform duration-500 ease-out group-hover:translate-x-1"
+          >
+            →
+          </span>
         </span>
-      </span>
+      </div>
     </Link>
   );
 }
+
+/** Same card under the older names, so existing pages keep working. */
+export const ProductRow = ProductCard;
+export const ProductLine = ProductCard;
