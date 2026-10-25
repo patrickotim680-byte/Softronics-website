@@ -18,14 +18,14 @@ export default async function TermsPage() {
     <Section space="md">
       <div className="max-w-prose">
         <p className="eyebrow">Legal</p>
-        <h1 className="mt-4 text-display-sm font-semibold tracking-[-0.028em] text-ink">Terms</h1>
-        <p className="mt-3 font-mono text-xs uppercase tracking-[0.1em] text-faint">
-          Terms for this website. Project work is governed by its own signed agreement.
+        <h1 className="mt-3 text-[2.5rem] font-semibold leading-[1.04] tracking-[-0.035em] text-ink md:text-[3.5rem]">Terms</h1>
+        <p className="mt-4 text-lg leading-relaxed text-muted">
+          Terms for using this website. Project work is covered by its own signed agreement.
         </p>
 
         <div className="mt-10 space-y-8 text-[1.0625rem] leading-relaxed text-ink/85">
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">Use of this site</h2>
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">Use of this site</h2>
             <p className="mt-3">
               You may read, link to and quote this website with attribution. You may not attempt to
               access non-public areas, disrupt the service, or submit content that is unlawful or
@@ -34,7 +34,7 @@ export default async function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">
               Accuracy of content
             </h2>
             <p className="mt-3">
@@ -45,7 +45,7 @@ export default async function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">
               Intellectual property
             </h2>
             <p className="mt-3">
@@ -55,7 +55,7 @@ export default async function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">Contact</h2>
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">Contact</h2>
             <p className="mt-3">
               Questions about these terms:{' '}
               <a

@@ -4,6 +4,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { Section, SectionHeading } from '@/components/site/section';
 import { CtaBand } from '@/components/site/cta-band';
 import { ProductRow } from '@/components/site/product-row';
+import { Reveal } from '@/components/site/reveal';
 import { SetupNotice } from '@/components/site/setup-notice';
 import { listPublishedProducts } from '@/lib/db/products';
 import { getSettings } from '@/lib/db/settings';
@@ -14,8 +15,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = pageMetadata({
   title: 'Products',
-  description:
-    'Software products Softronics is developing, with current and honest status for each one.',
+  description: 'Software products from Softronics, built for African organizations.',
   path: '/products',
 });
 
@@ -25,16 +25,17 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <Section space="sm" className="border-b border-line">
+      <Section space="lg">
         <SectionHeading
           as="h1"
+          align="center"
           eyebrow="Products"
-          title="What we are building, and how far along it is."
-          lead="Every entry on this page is managed in the Softronics CMS. Statuses are kept current: concept, research, in development, coming soon, or available."
+          title="Software for African organizations."
+          lead="Each product shows where it is today: in the works, coming soon or available."
         />
       </Section>
 
-      <Section space="md">
+      <Section space="md" className="bg-raised">
         {missing.length > 0 && (
           <div className="mb-8">
             <SetupNotice missing={missing} context="This page" />
@@ -42,15 +43,19 @@ export default async function ProductsPage() {
         )}
 
         {products.length > 0 ? (
-          <div>
-            {products.map((product) => (
-              <ProductRow key={product.id} product={product} />
+          <ul className="grid gap-4 md:grid-cols-2">
+            {products.map((product, index) => (
+              <li key={product.id}>
+                <Reveal delay={(index % 2) * 120} className="h-full">
+                  <ProductRow product={product} />
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ul>
         ) : (
           <EmptyState
-            title="No products published yet"
-            description="This page is driven by the database. When an administrator publishes a product in the dashboard it appears here immediately, with no code change."
+            title="Products are coming soon"
+            description="Our first products are on the way. In the meantime, tell us about a problem you would like solved."
             action={
               <ButtonLink href="/contact" size="sm">
                 Talk to Softronics

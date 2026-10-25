@@ -23,16 +23,17 @@ export default async function InsightsPage() {
 
   return (
     <>
-      <Section space="sm" className="border-b border-line">
+      <Section space="lg">
         <SectionHeading
           as="h1"
+          align="center"
           eyebrow="Insights"
           title="Notes on what we build and why."
-          lead="Engineering decisions, product thinking and observations from working on software in this region. Published from the Softronics CMS."
+          lead="Engineering decisions, product thinking and lessons from building software in this region."
         />
       </Section>
 
-      <Section space="md">
+      <Section space="md" className="bg-raised">
         {missing.length > 0 && (
           <div className="mb-8">
             <SetupNotice missing={missing} context="This page" />
@@ -41,18 +42,18 @@ export default async function InsightsPage() {
 
         {posts.length === 0 ? (
           <EmptyState
-            title="No articles published yet"
-            description="Articles are written and published in the admin dashboard. Drafts stay private until they are published, and never appear on this page."
+            title="Nothing published yet"
+            description="Our first articles are on the way. Follow us to hear when they land."
           />
         ) : (
           <>
             {latest && <FeaturedPost post={latest} />}
             {rest.length > 0 && (
               <div className="mt-16">
-                <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
+                <h2 className="text-[1.5rem] font-semibold tracking-[-0.025em] text-ink">
                   More articles
                 </h2>
-                <div className="mt-2 border-b border-line">
+                <div className="mt-4 border-b border-ink/[0.08]">
                   {rest.map((post) => (
                     <PostListItem key={post.id} post={post} />
                   ))}

@@ -18,16 +18,16 @@ export default async function PrivacyPage() {
     <Section space="md">
       <div className="max-w-prose">
         <p className="eyebrow">Legal</p>
-        <h1 className="mt-4 text-display-sm font-semibold tracking-[-0.028em] text-ink">
+        <h1 className="mt-3 text-[2.5rem] font-semibold leading-[1.04] tracking-[-0.035em] text-ink md:text-[3.5rem]">
           Privacy
         </h1>
-        <p className="mt-3 font-mono text-xs uppercase tracking-[0.1em] text-faint">
-          Plain-language summary. Not legal advice.
+        <p className="mt-4 text-lg leading-relaxed text-muted">
+          What we collect through this website, why, and how to have it removed.
         </p>
 
         <div className="mt-10 space-y-8 text-[1.0625rem] leading-relaxed text-ink/85">
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">
               What we collect
             </h2>
             <p className="mt-3">
@@ -42,7 +42,7 @@ export default async function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">Why we collect it</h2>
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">Why we collect it</h2>
             <p className="mt-3">
               To reply to your inquiry, and to keep automated spam out of our inbox. We do not sell
               or share your details, and we do not use them for marketing you did not ask for.
@@ -50,7 +50,7 @@ export default async function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">Analytics and cookies</h2>
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">Analytics and cookies</h2>
             <p className="mt-3">
               The public website sets no advertising or tracking cookies. A session cookie is used
               only inside the administrator dashboard, for signed-in staff.
@@ -58,7 +58,7 @@ export default async function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">Where it is stored</h2>
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">Where it is stored</h2>
             <p className="mt-3">
               Submissions are stored in a managed PostgreSQL database with access restricted to
               authorized Softronics administrators.
@@ -66,7 +66,7 @@ export default async function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold tracking-[-0.018em] text-ink">
+            <h2 className="text-[1.375rem] font-semibold tracking-[-0.02em] text-ink">
               Removing your data
             </h2>
             <p className="mt-3">

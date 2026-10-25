@@ -64,9 +64,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <article>
-        <Section space="sm" className="border-b border-line">
+        <Section space="md">
           <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-faint">
+            <ol className="flex items-center gap-2 text-sm text-faint">
               <li>
                 <Link href="/insights" className="transition-colors hover:text-ink">
                   Insights
@@ -79,15 +79,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
           <div className="max-w-3xl">
             {post.category && (
-              <p className="eyebrow mb-4">{post.category.name}</p>
+              <p className="eyebrow mb-3">{post.category.name}</p>
             )}
-            <h1 className="text-[2rem] font-semibold leading-[1.12] tracking-[-0.028em] text-ink md:text-[2.75rem]">
+            <h1 className="text-[2.25rem] font-semibold leading-[1.06] tracking-[-0.035em] text-ink md:text-[3.5rem]">
               {post.title}
             </h1>
             {post.excerpt && (
               <p className="mt-5 max-w-prose text-lg leading-relaxed text-muted">{post.excerpt}</p>
             )}
-            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-5 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-faint">
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-ink/[0.08] pt-5 text-sm text-faint">
               <span>{post.author_name ?? 'Softronics'}</span>
               <time dateTime={post.published_at ?? undefined}>{formatDate(post.published_at)}</time>
               {post.reading_minutes && <span>{post.reading_minutes} min read</span>}
@@ -97,7 +97,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
         {post.featured_image_url && (
           <div className="shell mt-10">
-            <div className="relative aspect-[16/8] overflow-hidden rounded-xl border border-line bg-raised">
+            <div className="relative aspect-[16/8] overflow-hidden rounded-[1.75rem] bg-raised">
               <Image
                 src={post.featured_image_url}
                 alt=""
@@ -116,14 +116,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
           {post.tags.length > 0 && (
             <div className="mt-14 max-w-prose border-t border-line pt-6">
-              <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
-                Tags
-              </h2>
+              <h2 className="text-sm font-semibold text-ink">Tags</h2>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
                   <li
                     key={tag.id}
-                    className="rounded-full border border-line px-3 py-1 text-xs text-muted"
+                    className="rounded-full bg-ink/[0.06] px-3 py-1 text-xs text-muted"
                   >
                     {tag.name}
                   </li>

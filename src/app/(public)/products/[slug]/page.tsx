@@ -68,9 +68,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <Section space="sm" className="border-b border-line">
+      <Section space="md">
         <nav aria-label="Breadcrumb" className="mb-8">
-          <ol className="flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-faint">
+          <ol className="flex items-center gap-2 text-sm text-faint">
             <li>
               <Link href="/products" className="transition-colors hover:text-ink">
                 Products
@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   alt={`${product.name} logo`}
                   width={56}
                   height={56}
-                  className="h-14 w-14 rounded-lg border border-line object-contain"
+                  className="h-14 w-14 rounded-2xl bg-raised object-contain"
                   unoptimized
                 />
               )}
@@ -102,11 +102,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <ProductStatusBadge status={product.status} />
               {product.category && (
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-faint">
+                <span className="text-sm text-faint">
                   {product.category}
                 </span>
               )}
-              <span className="font-mono text-[0.6875rem] text-faint">
+              <span className="text-sm text-faint">
                 Updated {formatDate(product.updated_at)}
               </span>
             </div>
@@ -128,7 +128,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   href={product.website_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-11 items-center justify-center rounded-md border border-line px-5 text-[0.9375rem] text-ink transition-colors hover:bg-raised"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-ink/[0.06] px-6 text-[0.9375rem] font-medium text-ink transition-[background-color,transform] duration-300 ease-out hover:bg-ink/[0.1] active:scale-[0.97]"
                 >
                   Visit website
                 </a>
@@ -138,11 +138,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </Section>
 
-      <Section space="md">
+      <Section space="md" className="bg-raised">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
           <div>
             {product.image_url && (
-              <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-xl border border-line bg-raised">
+              <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-[1.75rem] bg-surface">
                 <Image
                   src={product.image_url}
                   alt={`${product.name} interface`}
@@ -158,18 +158,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <Markdown content={product.description} />
             ) : (
               <p className="max-w-prose leading-relaxed text-muted">
-                A fuller description of {product.name} is being written. In the meantime, contact us
-                for details on scope and timing.
+                More details about {product.name} are coming. Contact us in the meantime for scope and
+                timing.
               </p>
             )}
           </div>
 
           {product.features.length > 0 && (
-            <aside className="lg:sticky lg:top-24 lg:self-start">
-              <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
-                Planned scope
-              </h2>
-              <ul className="mt-4 space-y-3 border-t border-line pt-4">
+            <aside className="card p-7 lg:sticky lg:top-24 lg:self-start">
+              <h2 className="text-sm font-semibold text-ink">Planned scope</h2>
+              <ul className="mt-4 space-y-3">
                 {product.features.map((feature) => (
                   <li key={feature} className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/85">
                     <span
