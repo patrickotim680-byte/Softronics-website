@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import type { ReactNode } from 'react';
 
 export const controlClass =
-  'w-full rounded-md border border-line bg-surface px-3 py-2.5 text-[0.9375rem] text-ink placeholder:text-faint transition-colors duration-150 ease-out hover:border-ink/25 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25 disabled:bg-raised disabled:text-muted';
+  'w-full rounded-xl border border-transparent bg-ink/[0.05] px-4 py-3 text-base text-ink placeholder:text-faint transition-[background-color,border-color,box-shadow] duration-300 ease-out hover:bg-ink/[0.07] focus:border-brand focus:bg-surface focus:outline-none focus:ring-4 focus:ring-brand/15 disabled:bg-raised disabled:text-muted';
 
 interface FieldProps {
   label: string;

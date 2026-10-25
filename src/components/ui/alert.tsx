@@ -4,10 +4,10 @@ import type { ReactNode } from 'react';
 type AlertTone = 'info' | 'success' | 'warning' | 'error';
 
 const tones: Record<AlertTone, string> = {
-  info: 'border-brand/25 bg-brand/[0.05] text-ink',
-  success: 'border-signal-green/30 bg-signal-green/[0.07] text-ink',
-  warning: 'border-signal-amber/35 bg-signal-amber/[0.09] text-ink',
-  error: 'border-signal-red/30 bg-signal-red/[0.06] text-ink',
+  info: 'bg-brand/[0.07] text-ink',
+  success: 'bg-signal-green/[0.1] text-ink',
+  warning: 'bg-signal-amber/[0.13] text-ink',
+  error: 'bg-signal-red/[0.08] text-ink',
 };
 
 const labels: Record<AlertTone, string> = {
@@ -28,9 +28,9 @@ export function Alert({ tone = 'info', title, children, className }: AlertProps)
   return (
     <div
       role={tone === 'error' ? 'alert' : 'status'}
-      className={cn('rounded-lg border px-4 py-3 text-sm leading-relaxed', tones[tone], className)}
+      className={cn('rounded-2xl px-5 py-4 text-sm leading-relaxed', tones[tone], className)}
     >
-      <p className="mb-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-muted">
+      <p className="mb-1 text-sm font-semibold text-ink">
         {title ?? labels[tone]}
       </p>
       <div className="[&_a]:font-medium [&_a]:text-brand-strong [&_a]:underline [&_a]:underline-offset-2">

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FOOTER_NAV } from '@/lib/constants';
+import { FOOTER_NAV, SOCIAL_LINKS } from '@/lib/constants';
 import { Logo } from './logo';
 import type { GeneralSettings } from '@/lib/db/settings';
 
@@ -28,6 +28,24 @@ export function SiteFooter({ settings }: { settings: GeneralSettings }) {
               <div className="flex gap-2">
                 <dt className="text-faint">Based in</dt>
                 <dd className="text-ink">{settings.location_label}</dd>
+              </div>
+            )}
+            {SOCIAL_LINKS.length > 0 && (
+              <div className="flex gap-2">
+                <dt className="text-faint">Follow</dt>
+                <dd className="flex flex-wrap gap-x-4 gap-y-1">
+                  {SOCIAL_LINKS.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-ink transition-colors duration-300 hover:text-brand-strong"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </dd>
               </div>
             )}
           </dl>

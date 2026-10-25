@@ -96,7 +96,7 @@ export default async function HomePage() {
           <SectionHeading
             align="center"
             eyebrow="What we do"
-            title="Four ways we work with organizations."
+            title="What we can build with you."
             lead="Every engagement starts with the problem, in the words of the people who have it."
           />
         </Reveal>
@@ -169,8 +169,8 @@ export default async function HomePage() {
             </ul>
           ) : (
             <EmptyState
-              title="No products published yet"
-              description="Products are managed in the admin dashboard. Once one is created and published it appears here automatically."
+              title="Products are coming soon"
+              description="Our first products are on the way. In the meantime, tell us about a problem you would like solved."
               action={
                 <ButtonLink href="/contact" variant="secondary" size="sm">
                   Talk to Softronics
@@ -199,9 +199,9 @@ export default async function HomePage() {
             title="How we decide what to build, and how to build it."
           />
         </Reveal>
-        <dl className="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-3">
+        <dl className="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 md:mt-20">
           {PRINCIPLES.map((principle, index) => (
-            <Reveal key={principle.title} delay={(index % 3) * 100}>
+            <Reveal key={principle.title} delay={(index % 2) * 100}>
               <dt className="text-[1.25rem] font-semibold tracking-[-0.02em] text-ink">
                 {principle.title}
               </dt>

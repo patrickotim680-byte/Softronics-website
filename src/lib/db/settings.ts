@@ -49,7 +49,7 @@ export const SETTINGS_DEFAULTS = {
     description: SITE.description,
     primary_cta_label: 'Talk to Softronics',
     primary_cta_href: '/contact',
-    secondary_cta_label: 'Explore Our Work',
+    secondary_cta_label: 'See our products',
     secondary_cta_href: '/products',
   } satisfies HeroSettings,
   home_cta: {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Section } from '@/components/site/section';
 import { ContactForm } from '@/components/site/contact-form';
-import { INQUIRY_TYPES } from '@/lib/constants';
+import { INQUIRY_TYPES, SOCIAL_LINKS } from '@/lib/constants';
 import { getSettings } from '@/lib/db/settings';
 import { pageMetadata } from '@/lib/seo';
 import type { InquiryType } from '@/types/database';
@@ -30,11 +30,17 @@ export default async function ContactPage({
     <Section space="md">
       <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20">
         <div>
-          <p className="eyebrow">Contact</p>
-          <h1 className="mt-4 text-[2.25rem] font-semibold leading-[1.1] tracking-[-0.03em] text-ink md:text-[2.75rem]">
+          <p className="eyebrow animate-fade-up">Contact</p>
+          <h1
+            className="animate-fade-up mt-3 text-[2.5rem] font-semibold leading-[1.04] tracking-[-0.035em] text-ink md:text-[3.5rem]"
+            style={{ animationDelay: '100ms' }}
+          >
             Tell us what you are trying to solve.
           </h1>
-          <p className="mt-5 max-w-prose text-lg leading-relaxed text-muted">
+          <p
+            className="animate-fade-up mt-5 max-w-prose text-lg leading-relaxed text-muted md:text-xl"
+            style={{ animationDelay: '200ms' }}
+          >
             The more concrete the problem, the more useful our first reply will be. Rough ideas are
             welcome too.
           </p>
@@ -44,14 +50,12 @@ export default async function ContactPage({
           </div>
         </div>
 
-        <aside className="space-y-8 lg:border-l lg:border-line lg:pl-10">
-          <div>
-            <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
-              Direct
-            </h2>
+        <aside className="space-y-6 lg:pt-3">
+          <div className="card card-soft p-7">
+            <h2 className="text-sm font-semibold text-ink">Reach us directly</h2>
             <a
               href={`mailto:${general.contact_email}`}
-              className="mt-3 block text-[1.0625rem] font-medium text-brand-strong underline decoration-brand/30 underline-offset-4 hover:decoration-brand"
+              className="mt-3 block break-words text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
             >
               {general.contact_email}
             </a>
@@ -60,40 +64,36 @@ export default async function ContactPage({
                 href={`https://wa.me/${whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-2 text-[0.9375rem] text-ink underline decoration-line underline-offset-4 hover:decoration-ink/40"
+                className="mt-3 inline-flex items-center gap-2 text-[0.9375rem] text-ink transition-colors duration-300 hover:text-brand-strong"
               >
                 WhatsApp
                 <span aria-hidden="true">↗</span>
               </a>
             )}
+            {SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center gap-2 text-[0.9375rem] text-ink transition-colors duration-300 hover:text-brand-strong"
+              >
+                {link.label}
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
             {general.location_label && (
               <p className="mt-4 text-sm text-muted">{general.location_label}</p>
             )}
           </div>
 
-          <div>
-            <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
-              What to expect
-            </h2>
-            <ul className="mt-3 space-y-3 text-sm leading-relaxed text-muted">
+          <div className="card card-soft p-7">
+            <h2 className="text-sm font-semibold text-ink">What to expect</h2>
+            <ul className="mt-3 space-y-3 text-[0.9375rem] leading-relaxed text-muted">
               <li>A reply from a person, not an autoresponder.</li>
               <li>Questions about the problem before any proposal.</li>
               <li>An honest answer if it is not work we should take on.</li>
             </ul>
-          </div>
-
-          <div>
-            <h2 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
-              Inquiry types
-            </h2>
-            <dl className="mt-3 space-y-3 text-sm">
-              {INQUIRY_TYPES.map((type) => (
-                <div key={type.value}>
-                  <dt className="font-medium text-ink">{type.label}</dt>
-                  <dd className="text-muted">{type.hint}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </aside>
       </div>

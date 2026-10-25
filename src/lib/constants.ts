@@ -9,6 +9,11 @@ export const SITE = {
   twitter: undefined as string | undefined,
 } as const;
 
+/** Official profiles. Add a line here and it appears in the footer automatically. */
+export const SOCIAL_LINKS: { label: string; href: string }[] = [
+  { label: 'TikTok', href: 'https://www.tiktok.com/@softronicsafrica' },
+];
+
 export const MAIN_NAV = [
   { href: '/solutions', label: 'Solutions' },
   { href: '/products', label: 'Products' },
@@ -122,8 +127,8 @@ export const CAPABILITIES = [
   },
   {
     index: '04',
-    title: 'Digital Solutions',
-    summary: 'Technology designed around the realities and requirements of African organizations.',
+    title: 'Business Systems',
+    summary: 'Records, inventory, billing and reporting for organizations that have outgrown spreadsheets.',
     href: '/solutions#business-systems',
   },
 ] as const;
@@ -134,23 +139,15 @@ export const PRINCIPLES = [
     body: 'We start from a problem someone already has, described in their words, before any technology is chosen.',
   },
   {
-    title: 'Practical technology',
-    body: 'Systems have to work on the devices and networks people actually use, not only on a developer laptop.',
+    title: 'Built for real conditions',
+    body: 'Systems have to work on the phones, networks and payment methods people actually use. Connectivity, cost and language are design inputs, not afterthoughts.',
   },
   {
-    title: 'Quality engineering',
-    body: 'Typed code, reviewed changes, tested paths. Software that can be maintained after it ships.',
+    title: 'Quality you can maintain',
+    body: 'Typed code, reviewed changes and tested paths, so software can still be improved long after it ships.',
   },
   {
-    title: 'Security and responsible data handling',
+    title: 'Responsible with data',
     body: 'Least privilege by default, validation on the server, and no collection of data we do not need.',
-  },
-  {
-    title: 'African context',
-    body: 'Connectivity, cost, language, payments and infrastructure are design inputs, not afterthoughts.',
-  },
-  {
-    title: 'Long-term thinking',
-    body: 'Services fund products, products become platforms. We build foundations we can still extend later.',
   },
 ] as const;
