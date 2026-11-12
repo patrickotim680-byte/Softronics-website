@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { MAIN_NAV } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { Logo } from './logo';
+import { T } from './language-provider';
 
 /**
  * Site header: a slim frosted-glass bar. The blur lives on its own background
@@ -62,7 +63,7 @@ export function SiteHeader({ showInsights = true }: { showInsights?: boolean }) 
                 isActive(item.href) ? 'text-ink' : 'text-muted hover:text-ink',
               )}
             >
-              {item.label}
+              <T id={`nav.${item.label.toLowerCase()}`}>{item.label}</T>
             </Link>
           ))}
         </nav>
@@ -70,9 +71,9 @@ export function SiteHeader({ showInsights = true }: { showInsights?: boolean }) 
         <div className="hidden md:block">
           <Link
             href="/contact"
-            className="inline-flex h-8 items-center rounded-full bg-brand px-4 text-[0.8125rem] font-medium text-white transition-[background-color,transform] duration-300 ease-out hover:bg-brand-strong active:scale-[0.96]"
+            className="inline-flex h-8 items-center rounded-full bg-brand px-4 text-[0.8125rem] font-medium text-white transition-[background-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-px hover:bg-brand-strong hover:shadow-[0_8px_20px_-8px_oklch(var(--brand)/0.55)] active:translate-y-0 active:scale-[0.96]"
           >
-            Talk to Softronics
+            <T id="cta.talk">Talk to Softronics</T>
           </Link>
         </div>
 
@@ -123,7 +124,7 @@ export function SiteHeader({ showInsights = true }: { showInsights?: boolean }) 
                 open ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
               )}
             >
-              {item.label}
+              <T id={`nav.${item.label.toLowerCase()}`}>{item.label}</T>
             </Link>
           ))}
         </nav>
@@ -139,7 +140,7 @@ export function SiteHeader({ showInsights = true }: { showInsights?: boolean }) 
             href="/contact"
             className="flex h-[3.25rem] items-center justify-center rounded-full bg-brand text-[1.0625rem] font-medium text-white transition-transform duration-300 ease-out active:scale-[0.97]"
           >
-            Talk to Softronics
+            <T id="cta.talk">Talk to Softronics</T>
           </Link>
         </div>
       </div>

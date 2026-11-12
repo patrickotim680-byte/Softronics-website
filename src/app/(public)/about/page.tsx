@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Section, SectionHeading } from '@/components/site/section';
 import { CtaBand } from '@/components/site/cta-band';
+import { ContactLinks } from '@/components/site/contact-links';
 import { Reveal } from '@/components/site/reveal';
 import { ProjectStatusBadge } from '@/components/site/status-badge';
 import { PRINCIPLES, SOCIAL_LINKS } from '@/lib/constants';
@@ -154,19 +155,7 @@ export default async function AboutPage() {
             <p className="mx-auto mt-3 max-w-md text-[1.0625rem] leading-relaxed text-muted">
               We share what we are building, and what we are learning, as it happens.
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              {SOCIAL_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-11 items-center rounded-full bg-ink/[0.06] px-6 text-[0.9375rem] font-medium text-ink transition-[background-color,transform] duration-300 ease-out hover:bg-ink/[0.1] active:scale-[0.97]"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+            <ContactLinks layout="pills" className="mt-6" socials />
           </Reveal>
         </Section>
       )}

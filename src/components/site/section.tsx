@@ -24,9 +24,9 @@ export function Section({ children, className, id, space = 'md' }: SectionProps)
 }
 
 interface SectionHeadingProps {
-  eyebrow?: string;
-  title: string;
-  lead?: string;
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  lead?: ReactNode;
   className?: string;
   as?: 'h1' | 'h2';
   align?: 'left' | 'center';

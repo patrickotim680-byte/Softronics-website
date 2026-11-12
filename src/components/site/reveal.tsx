@@ -18,6 +18,8 @@ interface RevealProps {
 export function Reveal({ children, className, delay = 0 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
+  // will-change keeps a layer alive on the GPU. Useful while animating, wasteful afterwards.
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
@@ -49,8 +51,12 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
       ref={ref}
       data-reveal
       style={style}
+      onTransitionEnd={(event) => {
+        if (event.target === event.currentTarget && shown) setSettled(true);
+      }}
       className={cn(
-        'transition-[opacity,transform] duration-[900ms] ease-out will-change-[opacity,transform]',
+        'transition-[opacity,transform] duration-[900ms] ease-out',
+        !settled && 'will-change-[opacity,transform]',
         shown ? 'translate-y-0 opacity-100' : 'translate-y-7 opacity-0',
         className,
       )}

@@ -5,7 +5,9 @@ import { ButtonLink } from '@/components/ui/button';
 import { Section, SectionHeading } from '@/components/site/section';
 import { CtaBand } from '@/components/site/cta-band';
 import { ProductLine } from '@/components/site/product-row';
+import { ExplodeGrid } from '@/components/site/explode-grid';
 import { Reveal } from '@/components/site/reveal';
+import { T } from '@/components/site/language-provider';
 import { SetupNotice } from '@/components/site/setup-notice';
 import { CAPABILITIES, SITE } from '@/lib/constants';
 import { getSettings } from '@/lib/db/settings';
@@ -92,46 +94,48 @@ export default async function HomePage() {
         <Reveal>
           <SectionHeading
             align="center"
-            eyebrow="What we do"
-            title="What we can build with you."
-            lead="Every engagement starts with the problem, in the words of the people who have it."
+            eyebrow={<T id="home.what.eyebrow">What we do</T>}
+            title={<T id="home.what.title">What we can build with you.</T>}
+            lead={
+              <T id="home.what.lead">
+                Every engagement starts with the problem, in the words of the people who have it.
+              </T>
+            }
           />
         </Reveal>
 
-        <ul className="mt-14 grid gap-4 md:mt-20 md:grid-cols-3">
-          {CAPABILITIES.map((capability, index) => (
+        <ExplodeGrid className="mt-14 grid gap-4 md:mt-20 md:grid-cols-3">
+          {CAPABILITIES.map((capability) => (
             <li key={capability.index}>
-              <Reveal delay={index * 120} className="h-full">
-                <Link
-                  href={capability.href}
-                  className="card card-lift group flex h-full min-h-[15rem] flex-col p-8"
-                >
-                  <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink">
-                    {capability.title}
-                  </h3>
-                  <p className="mt-3 max-w-md text-[1.0625rem] leading-relaxed text-muted">
-                    {capability.summary}
-                  </p>
-                  <span className="mt-auto pt-8">
-                    <span
-                      aria-hidden="true"
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-raised text-ink transition-[background-color,color,transform] duration-500 ease-out group-hover:translate-x-1 group-hover:bg-brand group-hover:text-white"
-                    >
-                      →
-                    </span>
+              <Link
+                href={capability.href}
+                className="card card-lift group flex h-full min-h-[15rem] flex-col p-8"
+              >
+                <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink">
+                  <T id={`cap.${capability.index}.title`}>{capability.title}</T>
+                </h3>
+                <p className="mt-3 max-w-md text-[1.0625rem] leading-relaxed text-muted">
+                  <T id={`cap.${capability.index}.summary`}>{capability.summary}</T>
+                </p>
+                <span className="mt-auto pt-8">
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-raised text-ink transition-[background-color,color,transform] duration-500 ease-out group-hover:translate-x-1 group-hover:bg-brand group-hover:text-white"
+                  >
+                    →
                   </span>
-                </Link>
-              </Reveal>
+                </span>
+              </Link>
             </li>
           ))}
-        </ul>
+        </ExplodeGrid>
 
         <Reveal className="mt-10 text-center">
           <Link
             href="/solutions"
             className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
           >
-            See all solutions <span aria-hidden="true">→</span>
+            <T id="home.solutions.all">See all solutions</T> <span aria-hidden="true">→</span>
           </Link>
         </Reveal>
       </Section>
@@ -143,9 +147,13 @@ export default async function HomePage() {
           <Reveal>
             <SectionHeading
               align="center"
-              eyebrow="Products"
-              title="What we're making."
-              lead="Software built for African organizations and the people who rely on it."
+              eyebrow={<T id="home.products.eyebrow">Products</T>}
+              title={<T id="home.products.title">What we&apos;re making.</T>}
+              lead={
+                <T id="home.products.lead">
+                  Software built for African organizations and the people who rely on it.
+                </T>
+              }
             />
           </Reveal>
 
@@ -170,7 +178,7 @@ export default async function HomePage() {
               href="/products"
               className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
             >
-              See all products <span aria-hidden="true">→</span>
+              <T id="home.products.all">See all products</T> <span aria-hidden="true">→</span>
             </Link>
           </Reveal>
         </Section>
@@ -181,15 +189,21 @@ export default async function HomePage() {
         <Reveal className="text-center">
           <SectionHeading
             align="center"
-            eyebrow="Why Softronics"
-            title="Real problems first. Built for real conditions."
-            lead="Systems have to work on the phones, networks and payment methods people actually use."
+            eyebrow={<T id="home.why.eyebrow">Why Softronics</T>}
+            title={
+              <T id="home.why.title">Real problems first. Built for real conditions.</T>
+            }
+            lead={
+              <T id="home.why.lead">
+                Systems have to work on the phones, networks and payment methods people actually use.
+              </T>
+            }
           />
           <Link
             href="/about#principles"
             className="mt-8 inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
           >
-            How we work <span aria-hidden="true">→</span>
+            <T id="home.why.link">How we work</T> <span aria-hidden="true">→</span>
           </Link>
         </Reveal>
       </Section>
@@ -199,13 +213,13 @@ export default async function HomePage() {
         <Section space="md">
           <Reveal className="flex items-end justify-between gap-6">
             <h2 className="text-[1.75rem] font-semibold tracking-[-0.025em] text-ink md:text-[2.25rem]">
-              Recent writing
+              <T id="home.writing">Recent writing</T>
             </h2>
             <Link
               href="/insights"
               className="shrink-0 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
             >
-              All insights <span aria-hidden="true">→</span>
+              <T id="home.writing.all">All insights</T> <span aria-hidden="true">→</span>
             </Link>
           </Reveal>
           <ul className="mt-10 grid gap-4 sm:grid-cols-2">

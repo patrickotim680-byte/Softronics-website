@@ -169,6 +169,46 @@
     transition-duration: 0.15s;
   }
 
+  /*
+   * Explode and reveal (see ExplodeGrid). --p runs 0 (piled up) to 1 (spread out).
+   * Each card is shifted toward the middle card by (its distance from the middle)
+   * x (its own width + the 1rem gap) x (1 - p). 100% inside translate means
+   * "this element's own size", which is why no pixel values are needed.
+   */
+  .explode {
+    --p: 1;
+  }
+
+  .explode > li {
+    position: relative;
+    transform:
+      translate3d(calc((1 - var(--i, 0)) * (100% + 1rem) * (1 - var(--p))), 0, 0)
+      rotate(calc((var(--i, 0) - 1) * 5deg * (1 - var(--p))))
+      scale(calc(0.92 + 0.08 * var(--p)));
+    will-change: transform;
+  }
+
+  .explode > li:nth-child(1) { --i: 0; z-index: 1; }
+  .explode > li:nth-child(2) { --i: 1; z-index: 3; }
+  .explode > li:nth-child(3) { --i: 2; z-index: 2; }
+
+  /* Single column on phones: the cards fan out downward instead of sideways. */
+  @media (max-width: 767px) {
+    .explode > li {
+      transform:
+        translate3d(0, calc((1 - var(--i, 0)) * (100% + 1rem) * (1 - var(--p))), 0)
+        rotate(calc((var(--i, 0) - 1) * 3deg * (1 - var(--p))))
+        scale(calc(0.94 + 0.06 * var(--p)));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .explode > li {
+      transform: none !important;
+      will-change: auto;
+    }
+  }
+
   .skip-link {
     position: absolute;
     left: -9999px;
