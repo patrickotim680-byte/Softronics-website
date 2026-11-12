@@ -2,13 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ButtonLink } from '@/components/ui/button';
-import { EmptyState } from '@/components/ui/empty-state';
 import { Section, SectionHeading } from '@/components/site/section';
 import { CtaBand } from '@/components/site/cta-band';
 import { ProductLine } from '@/components/site/product-row';
 import { Reveal } from '@/components/site/reveal';
 import { SetupNotice } from '@/components/site/setup-notice';
-import { CAPABILITIES, PRINCIPLES, SITE } from '@/lib/constants';
+import { CAPABILITIES, SITE } from '@/lib/constants';
 import { getSettings } from '@/lib/db/settings';
 import { listFeaturedProducts } from '@/lib/db/products';
 import { listPublishedPosts } from '@/lib/db/posts';
@@ -69,23 +68,21 @@ export default async function HomePage() {
           </div>
 
           <div
-            className="animate-scale-in relative mt-16 md:mt-24"
+            className="animate-scale-in relative mt-12 md:mt-24"
             style={{ animationDelay: '480ms' }}
           >
             <div
               aria-hidden="true"
               className="absolute inset-0 -z-10 scale-125 rounded-full bg-brand/20 blur-3xl"
             />
-            <div className="animate-float">
-              <Image
-                src="/brand/softronics-mark.png"
-                alt="Softronics"
-                width={300}
-                height={300}
-                priority
-                className="relative h-48 w-48 md:h-72 md:w-72"
-              />
-            </div>
+            <Image
+              src="/brand/softronics-mark.png"
+              alt="Softronics"
+              width={300}
+              height={300}
+              priority
+              className="relative h-36 w-36 sm:h-48 sm:w-48 md:h-72 md:w-72"
+            />
           </div>
         </div>
       </section>
@@ -101,15 +98,15 @@ export default async function HomePage() {
           />
         </Reveal>
 
-        <ul className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-20">
+        <ul className="mt-14 grid gap-4 md:mt-20 md:grid-cols-3">
           {CAPABILITIES.map((capability, index) => (
             <li key={capability.index}>
-              <Reveal delay={(index % 2) * 120} className="h-full">
+              <Reveal delay={index * 120} className="h-full">
                 <Link
                   href={capability.href}
-                  className="card card-lift group flex h-full min-h-[15rem] flex-col p-8 md:p-10"
+                  className="card card-lift group flex h-full min-h-[15rem] flex-col p-8"
                 >
-                  <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink md:text-[1.75rem]">
+                  <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink">
                     {capability.title}
                   </h3>
                   <p className="mt-3 max-w-md text-[1.0625rem] leading-relaxed text-muted">
@@ -140,77 +137,61 @@ export default async function HomePage() {
       </Section>
 
       {/* ------------------------------------------------- What we're making */}
-      <Section id="building" space="lg">
-        <Reveal>
-          <SectionHeading
-            align="center"
-            eyebrow="Products"
-            title="What we're making."
-            lead="Software built for African organizations and the people who rely on it."
-          />
-        </Reveal>
+      {/* Hidden until a product is published: an empty "coming soon" band says nothing. */}
+      {products.length > 0 && (
+        <Section id="building" space="lg">
+          <Reveal>
+            <SectionHeading
+              align="center"
+              eyebrow="Products"
+              title="What we're making."
+              lead="Software built for African organizations and the people who rely on it."
+            />
+          </Reveal>
 
-        <div className="mt-14 md:mt-20">
           {missing.length > 0 && (
-            <div className="mb-6">
+            <div className="mt-10">
               <SetupNotice missing={missing} context="This section" />
             </div>
           )}
 
-          {products.length > 0 ? (
-            <ul className="grid gap-4 md:grid-cols-2">
-              {products.map((product, index) => (
-                <li key={product.id}>
-                  <Reveal delay={(index % 2) * 120} className="h-full">
-                    <ProductLine product={product} />
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <EmptyState
-              title="Products are coming soon"
-              description="Our first products are on the way. In the meantime, tell us about a problem you would like solved."
-              action={
-                <ButtonLink href="/contact" variant="secondary" size="sm">
-                  Talk to Softronics
-                </ButtonLink>
-              }
-            />
-          )}
-        </div>
+          <ul className="mt-14 grid gap-4 md:mt-20 md:grid-cols-2">
+            {products.map((product, index) => (
+              <li key={product.id}>
+                <Reveal delay={(index % 2) * 120} className="h-full">
+                  <ProductLine product={product} />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
 
-        <Reveal className="mt-10 text-center">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
-          >
-            See all products <span aria-hidden="true">→</span>
-          </Link>
-        </Reveal>
-      </Section>
+          <Reveal className="mt-10 text-center">
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
+            >
+              See all products <span aria-hidden="true">→</span>
+            </Link>
+          </Reveal>
+        </Section>
+      )}
 
       {/* --------------------------------------------------------------- Why us */}
-      <Section id="why" space="lg" className="bg-raised">
-        <Reveal>
+      <Section id="why" space="lg" className={products.length > 0 ? 'bg-raised' : undefined}>
+        <Reveal className="text-center">
           <SectionHeading
             align="center"
             eyebrow="Why Softronics"
-            title="How we decide what to build, and how to build it."
+            title="Real problems first. Built for real conditions."
+            lead="Systems have to work on the phones, networks and payment methods people actually use."
           />
+          <Link
+            href="/about#principles"
+            className="mt-8 inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
+          >
+            How we work <span aria-hidden="true">→</span>
+          </Link>
         </Reveal>
-        <dl className="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 md:mt-20">
-          {PRINCIPLES.map((principle, index) => (
-            <Reveal key={principle.title} delay={(index % 2) * 100}>
-              <dt className="text-[1.25rem] font-semibold tracking-[-0.02em] text-ink">
-                {principle.title}
-              </dt>
-              <dd className="mt-2 text-[1.0625rem] leading-relaxed text-muted">
-                {principle.body}
-              </dd>
-            </Reveal>
-          ))}
-        </dl>
       </Section>
 
       {/* -------------------------------------------------------------- Insights */}

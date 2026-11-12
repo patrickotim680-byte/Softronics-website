@@ -109,27 +109,21 @@ export type Tone = 'neutral' | 'blue' | 'green' | 'amber' | 'violet' | 'red';
 export const CAPABILITIES = [
   {
     index: '01',
-    title: 'Software Development',
-    summary: 'Web applications, business systems and custom digital platforms.',
+    title: 'Custom Software',
+    summary: 'Web applications and digital platforms built around how your organization actually works.',
     href: '/solutions#custom-software',
   },
   {
     index: '02',
-    title: 'Product Development',
-    summary: 'Turning recurring real-world problems into scalable software products.',
-    href: '/solutions#digital-products',
+    title: 'Business Systems',
+    summary: 'Records, inventory, billing and reporting for organizations that have outgrown spreadsheets.',
+    href: '/solutions#business-systems',
   },
   {
     index: '03',
     title: 'AI & Automation',
     summary: 'Using modern AI and automation where they provide genuine practical value.',
     href: '/solutions#ai-automation',
-  },
-  {
-    index: '04',
-    title: 'Business Systems',
-    summary: 'Records, inventory, billing and reporting for organizations that have outgrown spreadsheets.',
-    href: '/solutions#business-systems',
   },
 ] as const;
 

@@ -12,7 +12,8 @@ import { Logo } from './logo';
  * layer, not on the header itself, because a backdrop filter would trap the
  * fixed full-screen mobile menu inside the bar's own height.
  */
-export function SiteHeader() {
+export function SiteHeader({ showInsights = true }: { showInsights?: boolean }) {
+  const nav = MAIN_NAV.filter((item) => showInsights || item.href !== '/insights');
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -51,7 +52,7 @@ export function SiteHeader() {
         <Logo size={28} />
 
         <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
-          {MAIN_NAV.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -110,7 +111,7 @@ export function SiteHeader() {
         )}
       >
         <nav aria-label="Mobile" className="flex flex-col px-5 pt-4">
-          {MAIN_NAV.map((item, index) => (
+          {nav.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}

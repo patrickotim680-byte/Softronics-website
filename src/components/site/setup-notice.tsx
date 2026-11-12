@@ -6,7 +6,8 @@ import { Alert } from '@/components/ui/alert';
  * says so rather than falling back to hard-coded placeholders.
  */
 export function SetupNotice({ missing, context }: { missing: string[]; context: string }) {
-  if (missing.length === 0) return null;
+  // Developer-only: visitors must never see configuration messages.
+  if (process.env.NODE_ENV === 'production' || missing.length === 0) return null;
 
   return (
     <Alert tone="warning" title="Database not connected">

@@ -93,7 +93,7 @@ export default async function AboutPage() {
         </ol>
       </Section>
 
-      <Section space="lg">
+      <Section id="principles" space="lg" className="scroll-mt-16">
         <Reveal>
           <SectionHeading align="center" eyebrow="Principles" title="What we hold to." />
         </Reveal>
