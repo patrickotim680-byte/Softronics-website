@@ -3,7 +3,13 @@ import { FOOTER_NAV, SOCIAL_LINKS } from '@/lib/constants';
 import { Logo } from './logo';
 import type { GeneralSettings } from '@/lib/db/settings';
 
-export function SiteFooter({ settings }: { settings: GeneralSettings }) {
+export function SiteFooter({
+  settings,
+  showInsights = true,
+}: {
+  settings: GeneralSettings;
+  showInsights?: boolean;
+}) {
   const year = new Date().getFullYear();
 
   return (
@@ -52,7 +58,10 @@ export function SiteFooter({ settings }: { settings: GeneralSettings }) {
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-          {FOOTER_NAV.map((group) => (
+          {FOOTER_NAV.map((group) => ({
+            ...group,
+            links: group.links.filter((link) => showInsights || link.href !== '/insights'),
+          })).map((group) => (
             <nav key={group.title} aria-label={group.title}>
               <h2 className="text-xs font-semibold text-ink">{group.title}</h2>
               <ul className="mt-4 space-y-2.5">
@@ -77,7 +86,6 @@ export function SiteFooter({ settings }: { settings: GeneralSettings }) {
           <p>
             © {year} {settings.company_name}. All rights reserved.
           </p>
-          <p>Building practical software for Africa.</p>
         </div>
       </div>
     </footer>

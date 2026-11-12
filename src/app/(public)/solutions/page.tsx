@@ -11,7 +11,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = pageMetadata({
   title: 'Solutions',
   description:
-    'Custom software, web applications, business systems, AI and automation, and digital product development from Softronics.',
+    'Custom software, business systems, and AI and automation from Softronics.',
   path: '/solutions',
 });
 
@@ -23,68 +23,38 @@ const SOLUTIONS = [
     title: 'Custom Software',
     lead: 'When the process is specific to your organization and off-the-shelf software forces you to work around it.',
     problems: [
-      'A workflow that currently lives in spreadsheets passed between people',
-      'Records kept in several places that no longer agree with each other',
-      'Manual steps that have to be repeated because nothing connects',
-      'Reporting that takes days to assemble by hand',
-    ],
-    delivers: 'A system built around your actual process, owned by you, documented and extensible.',
-  },
-  {
-    id: 'web-applications',
-    index: '02',
-    title: 'Web Applications',
-    lead: 'Systems your team and customers use through a browser, on whatever device they already own.',
-    problems: [
-      'Staff need access from different locations or on shared devices',
+      'A workflow that lives in spreadsheets passed between people',
       'Customers need to submit, track or pay for something themselves',
-      'An existing tool only works on one computer in one office',
       'A phone-first audience is being served a desktop-only interface',
     ],
     delivers:
-      'Responsive, server-rendered applications with role-based access, designed to stay usable on slow connections.',
+      'A responsive web application built around your actual process, with role-based access, designed to stay usable on slow connections. Owned by you, documented and extensible.',
   },
   {
     id: 'business-systems',
-    index: '03',
+    index: '02',
     title: 'Business Systems',
     lead: 'The operational backbone: records, inventory, billing, approvals and reporting.',
     problems: [
       'Stock levels are only known by asking someone',
       'Invoices and receipts are produced by hand and reconciled later',
-      'No reliable audit trail of who changed what, and when',
-      'Growth has outpaced the original way of working',
+      'No reliable record of who changed what, and when',
     ],
     delivers:
-      'A relational data model that matches how the business actually runs, with permissions and history built in.',
+      'A data model that matches how the business actually runs, with permissions and history built in.',
   },
   {
     id: 'ai-automation',
-    index: '04',
+    index: '03',
     title: 'AI & Automation',
     lead: 'Applied where it removes real work. Not added because it is fashionable.',
     problems: [
       'Documents are re-typed from one system into another',
       'The same routine question is answered dozens of times a week',
       'Unstructured text needs to be summarised, classified or extracted',
-      'Repetitive checks are done manually and inconsistently',
     ],
     delivers:
       'Narrow, measurable automation with a human in the loop where accuracy matters, and clear limits on what data is sent where.',
-  },
-  {
-    id: 'digital-products',
-    index: '05',
-    title: 'Digital Product Development',
-    lead: 'For recurring problems that deserve a product rather than a one-off project.',
-    problems: [
-      'Several organizations describe the same problem in the same way',
-      'An internal tool would be valuable to others in the sector',
-      'An idea needs validation before serious investment',
-      'A first version needs to reach real users quickly without becoming unmaintainable',
-    ],
-    delivers:
-      'Problem research, a scoped first version, and an architecture that can carry the product past its first release.',
   },
 ] as const;
 
@@ -99,7 +69,7 @@ export default async function SolutionsPage() {
           align="center"
           eyebrow="Solutions"
           title="What Softronics can build with you."
-          lead="Five areas of work, described by the problems they solve. If your situation is not listed, describe it to us anyway."
+          lead="Three areas of work, described by the problems they solve. If your situation is not listed, describe it to us anyway."
         />
       </Section>
 
