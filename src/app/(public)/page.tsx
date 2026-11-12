@@ -5,11 +5,10 @@ import { ButtonLink } from '@/components/ui/button';
 import { Section, SectionHeading } from '@/components/site/section';
 import { CtaBand } from '@/components/site/cta-band';
 import { ProductLine } from '@/components/site/product-row';
-import { ExplodeGrid } from '@/components/site/explode-grid';
 import { Reveal } from '@/components/site/reveal';
 import { T } from '@/components/site/language-provider';
 import { SetupNotice } from '@/components/site/setup-notice';
-import { CAPABILITIES, SITE } from '@/lib/constants';
+import { SITE } from '@/lib/constants';
 import { getSettings } from '@/lib/db/settings';
 import { listFeaturedProducts } from '@/lib/db/products';
 import { listPublishedPosts } from '@/lib/db/posts';
@@ -88,57 +87,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ------------------------------------------------------------ What we do */}
-      <Section id="what-we-do" space="lg" className="bg-raised">
-        <Reveal>
-          <SectionHeading
-            align="center"
-            eyebrow={<T id="home.what.eyebrow">What we do</T>}
-            title={<T id="home.what.title">What we can build with you.</T>}
-            lead={
-              <T id="home.what.lead">
-                Every engagement starts with the problem, in the words of the people who have it.
-              </T>
-            }
-          />
-        </Reveal>
-
-        <ExplodeGrid className="mt-14 grid gap-4 md:mt-20 md:grid-cols-3">
-          {CAPABILITIES.map((capability) => (
-            <li key={capability.index}>
-              <Link
-                href={capability.href}
-                className="card card-lift group flex h-full min-h-[15rem] flex-col p-8"
-              >
-                <h3 className="text-[1.5rem] font-semibold leading-tight tracking-[-0.025em] text-ink">
-                  <T id={`cap.${capability.index}.title`}>{capability.title}</T>
-                </h3>
-                <p className="mt-3 max-w-md text-[1.0625rem] leading-relaxed text-muted">
-                  <T id={`cap.${capability.index}.summary`}>{capability.summary}</T>
-                </p>
-                <span className="mt-auto pt-8">
-                  <span
-                    aria-hidden="true"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-raised text-ink transition-[background-color,color,transform] duration-500 ease-out group-hover:translate-x-1 group-hover:bg-brand group-hover:text-white"
-                  >
-                    →
-                  </span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ExplodeGrid>
-
-        <Reveal className="mt-10 text-center">
-          <Link
-            href="/solutions"
-            className="inline-flex items-center gap-1.5 text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
-          >
-            <T id="home.solutions.all">See all solutions</T> <span aria-hidden="true">→</span>
-          </Link>
-        </Reveal>
-      </Section>
 
       {/* ------------------------------------------------- What we're making */}
       {/* Hidden until a product is published: an empty "coming soon" band says nothing. */}
