@@ -1,7 +1,12 @@
 import Link from 'next/link';
-import { FOOTER_NAV, SOCIAL_LINKS } from '@/lib/constants';
+import { FOOTER_NAV } from '@/lib/constants';
+import { ContactLinks } from './contact-links';
+import { LanguageSwitcher } from './language-switcher';
+import { T } from './language-provider';
 import { Logo } from './logo';
 import type { GeneralSettings } from '@/lib/db/settings';
+
+const NAV_IDS = new Set(['About', 'Insights', 'Contact', 'Solutions', 'Products']);
 
 export function SiteFooter({
   settings,
@@ -20,7 +25,9 @@ export function SiteFooter({
           <p className="mt-4 text-[0.9375rem] leading-relaxed">{settings.tagline}</p>
           <dl className="mt-6 space-y-2 text-sm">
             <div className="flex gap-2">
-              <dt className="text-faint">Email</dt>
+              <dt className="text-faint">
+                <T id="footer.email">Email</T>
+              </dt>
               <dd>
                 <a
                   href={`mailto:${settings.contact_email}`}
@@ -32,29 +39,20 @@ export function SiteFooter({
             </div>
             {settings.location_label && (
               <div className="flex gap-2">
-                <dt className="text-faint">Based in</dt>
+                <dt className="text-faint">
+                  <T id="footer.basedIn">Based in</T>
+                </dt>
                 <dd className="text-ink">{settings.location_label}</dd>
               </div>
             )}
-            {SOCIAL_LINKS.length > 0 && (
-              <div className="flex gap-2">
-                <dt className="text-faint">Follow</dt>
-                <dd className="flex flex-wrap gap-x-4 gap-y-1">
-                  {SOCIAL_LINKS.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-ink transition-colors duration-300 hover:text-brand-strong"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </dd>
-              </div>
-            )}
           </dl>
+          <ContactLinks
+            layout="icons"
+            className="mt-6"
+            email={settings.contact_email}
+            whatsapp={settings.whatsapp_number}
+            socials
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
@@ -63,7 +61,9 @@ export function SiteFooter({
             links: group.links.filter((link) => showInsights || link.href !== '/insights'),
           })).map((group) => (
             <nav key={group.title} aria-label={group.title}>
-              <h2 className="text-xs font-semibold text-ink">{group.title}</h2>
+              <h2 className="text-xs font-semibold text-ink">
+                <T id={`footer.${group.title.toLowerCase()}`}>{group.title}</T>
+              </h2>
               <ul className="mt-4 space-y-2.5">
                 {group.links.map((link) => (
                   <li key={link.href}>
@@ -71,7 +71,9 @@ export function SiteFooter({
                       href={link.href}
                       className="text-sm transition-colors duration-300 hover:text-ink"
                     >
-                      {link.label}
+                      <T id={`${NAV_IDS.has(link.label) ? 'nav' : 'footer'}.${link.label.toLowerCase()}`}>
+                        {link.label}
+                      </T>
                     </Link>
                   </li>
                 ))}
@@ -82,10 +84,11 @@ export function SiteFooter({
       </div>
 
       <div className="border-t border-ink/[0.08]">
-        <div className="shell flex flex-col gap-2 py-6 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
+        <div className="shell flex flex-col gap-4 py-6 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {settings.company_name}. All rights reserved.
+            © {year} {settings.company_name}. <T id="footer.rights">All rights reserved.</T>
           </p>
+          <LanguageSwitcher />
         </div>
       </div>
     </footer>

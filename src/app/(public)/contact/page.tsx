@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Section } from '@/components/site/section';
+import { ContactLinks } from '@/components/site/contact-links';
 import { ContactForm } from '@/components/site/contact-form';
-import { INQUIRY_TYPES, SOCIAL_LINKS } from '@/lib/constants';
+import { INQUIRY_TYPES } from '@/lib/constants';
 import { getSettings } from '@/lib/db/settings';
 import { pageMetadata } from '@/lib/seo';
 import type { InquiryType } from '@/types/database';
@@ -53,35 +54,13 @@ export default async function ContactPage({
         <aside className="space-y-6 lg:pt-3">
           <div className="card card-soft p-7">
             <h2 className="text-sm font-semibold text-ink">Reach us directly</h2>
-            <a
-              href={`mailto:${general.contact_email}`}
-              className="mt-3 block break-words text-[1.0625rem] font-medium text-brand-strong transition-colors duration-300 hover:text-brand"
-            >
-              {general.contact_email}
-            </a>
-            {whatsapp.length > 0 && (
-              <a
-                href={`https://wa.me/${whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-2 text-[0.9375rem] text-ink transition-colors duration-300 hover:text-brand-strong"
-              >
-                WhatsApp
-                <span aria-hidden="true">↗</span>
-              </a>
-            )}
-            {SOCIAL_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 flex items-center gap-2 text-[0.9375rem] text-ink transition-colors duration-300 hover:text-brand-strong"
-              >
-                {link.label}
-                <span aria-hidden="true">↗</span>
-              </a>
-            ))}
+            <ContactLinks
+              layout="list"
+              className="mt-3"
+              email={general.contact_email}
+              whatsapp={whatsapp}
+              socials
+            />
             {general.location_label && (
               <p className="mt-4 text-sm text-muted">{general.location_label}</p>
             )}
